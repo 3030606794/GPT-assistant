@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tags used for safely attaching/removing TextWatchers on recycled RecyclerView items -->
+    <item type="id" name="tag_api_key_watcher" />
+    <item type="id" name="tag_api_key_save_runnable" />
+</resources>

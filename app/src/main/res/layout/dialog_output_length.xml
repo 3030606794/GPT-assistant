@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="4dp"
+    android:paddingBottom="2dp"
+    android:paddingHorizontal="6dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_output_length_options"
+        android:layout_width="match_parent"
+        android:layout_height="380dp"
+        android:overScrollMode="ifContentScrolls" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_custom_tokens"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        app:suffixText="Token">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_custom_tokens"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="@string/ui_output_length_custom_hint" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_custom_tokens_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:visibility="gone"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
+
+</LinearLayout>
