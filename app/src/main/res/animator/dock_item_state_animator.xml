@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Selected: slight "puff" like iOS liquid glass -->
+    <item android:state_selected="true">
+        <set>
+            <objectAnimator
+                android:propertyName="scaleX"
+                android:valueTo="1.06"
+                android:duration="180"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/decelerate_quad" />
+            <objectAnimator
+                android:propertyName="scaleY"
+                android:valueTo="1.06"
+                android:duration="180"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/decelerate_quad" />
+        </set>
+    </item>
+
+    <!-- Default: back to normal -->
+    <item>
+        <set>
+            <objectAnimator
+                android:propertyName="scaleX"
+                android:valueTo="1.0"
+                android:duration="180"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/decelerate_quad" />
+            <objectAnimator
+                android:propertyName="scaleY"
+                android:valueTo="1.0"
+                android:duration="180"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/decelerate_quad" />
+        </set>
+    </item>
+
+</selector>

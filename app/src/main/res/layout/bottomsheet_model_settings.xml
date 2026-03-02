@@ -1,0 +1,2252 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet_floating"
+    android:backgroundTint="?attr/colorSurfaceContainerHigh"
+    android:orientation="vertical"
+    android:paddingTop="16dp"
+    android:paddingBottom="20dp">
+
+    <!-- Handle -->
+    <View android:id="@+id/view_sheet_handle" android:layout_width="40dp" android:layout_height="4dp" android:layout_gravity="center_horizontal" android:layout_marginBottom="14dp" android:background="@drawable/bg_sheet_handle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-4dp"
+        android:layout_marginBottom="14dp"
+        android:text="@string/ui_streaming_nonlinear_model_settings"
+        android:textAppearance="?attr/textAppearanceHeadlineSmall"
+        android:textColor="?attr/colorOnSurface"
+        android:textStyle="bold"/>
+    <!-- Top console (fixed): rhythm chart only -->
+    <LinearLayout
+        android:id="@+id/container_nl_console"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-4dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_console_border"
+        android:orientation="vertical"
+        android:paddingHorizontal="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <LinearLayout
+            android:id="@+id/container_nl_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <tn.eluea.kgpt.ui.lab.NlRhythmPreviewView
+                android:id="@+id/view_nl_rhythm_preview"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:background="@drawable/bg_nl_rhythm_preview_flat"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp">
+
+            <!-- Typing preview (output area) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_nl_typing_preview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="?attr/colorSurfaceContainer"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ui_streaming_nl_preview_title"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_nl_preview_sample"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/ui_streaming_nl_preview_sample"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textSize="12.5sp" />
+
+                    <TextView
+                        android:id="@+id/tv_nl_preview_output"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_nl_rhythm_preview_flat"
+                        android:minHeight="72dp"
+                        android:padding="10dp"
+                        android:text="@string/ui_streaming_nl_preview_hint"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <!-- [Middle] Preview/Replay button group (tight to chart) -->
+            <LinearLayout
+                android:id="@+id/container_nl_preview_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
+                android:layout_marginBottom="6dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_nl_preview_play"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ui_streaming_nl_preview_play" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_nl_preview_replay"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/ui_streaming_nl_preview_replay" />
+            </LinearLayout>
+
+            <!-- [Tight divider] -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="10dp"
+                android:background="?android:attr/listDivider" />
+
+            <!-- [Bottom] Global parameters ("人类感" + slider) -->
+            <LinearLayout
+                android:id="@+id/container_nl_global_params"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="0dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp">
+
+                <!-- Global humanize controls -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ui_streaming_nl_global_title"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+
+                                <!-- Punctuation pause multiplier (τ) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ui_streaming_nl_pause_multiplier"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="13sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/tv_nl_pause_mult_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_nl_pause_mult"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="1.0"
+                        android:valueTo="6.0"
+                        android:stepSize="0.1"/>
+
+                    <!-- Two-end action hints -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-2dp"
+                        android:paddingHorizontal="16dp">
+
+                        <TextView
+                            android:id="@+id/tv_tip_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/ui_nl_hint_pause_mult_left"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="12sp"/>
+
+                        <TextView
+                            android:id="@+id/tv_tip_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/ui_nl_hint_pause_mult_right"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="12sp"/>
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#1A000000"/>
+                </LinearLayout>
+
+                <!-- Micro jitter noise (σ) -->
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_sigma" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                    <TextView android:id="@+id/tv_nl_sigma_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                </LinearLayout>
+
+                <com.google.android.material.slider.Slider android:id="@+id/slider_nl_sigma" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="0" android:valueTo="250" android:stepSize="5"/>
+
+                <!-- Two-end action hints -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_sigma_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_sigma_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+            </LinearLayout>
+
+                        </LinearLayout>
+
+<!-- Model picker -->
+<LinearLayout android:id="@+id/item_nl_model_trigger" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:paddingStart="0dp" android:paddingEnd="0dp" android:paddingTop="10dp" android:paddingBottom="10dp" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
+
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_model" android:textColor="?attr/colorPrimary" android:textSize="14sp" android:textStyle="bold"/>
+
+    <TextView android:id="@+id/tv_nl_model_selected" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+
+    <ImageView android:layout_width="18dp" android:layout_height="18dp" android:layout_marginStart="6dp" android:src="@drawable/ic_chevron_right" android:tint="?attr/colorOnSurfaceVariant"/>
+</LinearLayout>
+
+
+
+
+<View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="14dp" android:layout_marginBottom="14dp" android:background="?attr/colorOutlineVariant"/>
+
+            
+
+
+
+
+            <TextView android:id="@+id/tv_nl_model_summary" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+
+
+            <!-- Constant Speed Panel -->
+            <LinearLayout android:id="@+id/panel_lc" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:orientation="vertical" android:visibility="gone">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_lc_title" android:textColor="?attr/colorOnSurface" android:textSize="14sp" android:textStyle="bold"/>
+
+    <TextView android:id="@+id/btn_reset_lc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ui_restore_default" android:textColor="?attr/colorPrimary" android:textSize="12.5sp" android:paddingHorizontal="8dp" android:paddingVertical="4dp" android:background="?attr/selectableItemBackgroundBorderless" android:clickable="true" android:focusable="true"/>
+</LinearLayout>
+<!-- T -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_lc_t" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_lc_t_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_lc_t" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="10" android:valueTo="200" android:stepSize="5"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_lc_t_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_lc_t_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Harmonic Breathing Panel -->
+            <LinearLayout android:id="@+id/panel_sine" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:orientation="vertical" android:visibility="gone">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_sine_title" android:textColor="?attr/colorOnSurface" android:textSize="14sp" android:textStyle="bold"/>
+
+    <TextView android:id="@+id/btn_reset_sine" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ui_restore_default" android:textColor="?attr/colorPrimary" android:textSize="12.5sp" android:paddingHorizontal="8dp" android:paddingVertical="4dp" android:background="?attr/selectableItemBackgroundBorderless" android:clickable="true" android:focusable="true"/>
+</LinearLayout>
+<!-- Tbase -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_sine_tbase" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_sine_tbase_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_sine_tbase" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="20" android:valueTo="150" android:stepSize="5"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_sine_tbase_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_sine_tbase_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- A -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_sine_a" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_sine_a_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_sine_a" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="10" android:valueTo="100" android:stepSize="5"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_sine_a_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_sine_a_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- N -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_sine_period" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_sine_period_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_sine_period" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="5" android:valueTo="50" android:stepSize="1"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_sine_period_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_sine_period_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Markov Random Walk Panel -->
+            <LinearLayout android:id="@+id/panel_markov" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:orientation="vertical" android:visibility="gone">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_markov_title" android:textColor="?attr/colorOnSurface" android:textSize="14sp" android:textStyle="bold"/>
+
+    <TextView android:id="@+id/btn_reset_markov" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ui_restore_default" android:textColor="?attr/colorPrimary" android:textSize="12.5sp" android:paddingHorizontal="8dp" android:paddingVertical="4dp" android:background="?attr/selectableItemBackgroundBorderless" android:clickable="true" android:focusable="true"/>
+</LinearLayout>
+<!-- mu -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_markov_mu" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_markov_mu_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_markov_mu" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="10" android:valueTo="200" android:stepSize="5"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_markov_mu_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_markov_mu_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- rho -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_markov_rho" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_markov_rho_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_markov_rho" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="0.00" android:valueTo="0.99" android:stepSize="0.01"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_markov_rho_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_markov_rho_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- sigma -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_markov_sigma" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_markov_sigma_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_markov_sigma" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="0" android:valueTo="100" android:stepSize="5"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_markov_sigma_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_markov_sigma_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- Tmin -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_markov_tmin" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_markov_tmin_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_markov_tmin" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="10" android:valueTo="100" android:stepSize="5"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_markov_tmin_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_markov_tmin_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- Tmax -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_markov_tmax" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_markov_tmax_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_markov_tmax" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="100" android:valueTo="1000" android:stepSize="10"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_markov_tmax_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_markov_tmax_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- Pthink -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_markov_pthink" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_markov_pthink_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_markov_pthink" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="0.0" android:valueTo="10.0" android:stepSize="0.1"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_markov_pthink_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_markov_pthink_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Exponential Decay Panel -->
+            <LinearLayout android:id="@+id/panel_exp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:orientation="vertical" android:visibility="gone">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_exp_title" android:textColor="?attr/colorOnSurface" android:textSize="14sp" android:textStyle="bold"/>
+
+    <TextView android:id="@+id/btn_reset_exp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ui_restore_default" android:textColor="?attr/colorPrimary" android:textSize="12.5sp" android:paddingHorizontal="8dp" android:paddingVertical="4dp" android:background="?attr/selectableItemBackgroundBorderless" android:clickable="true" android:focusable="true"/>
+</LinearLayout>
+<!-- Tmax -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_exp_tmax" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_exp_tmax_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_exp_tmax" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="20" android:valueTo="1200" android:stepSize="10"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_exp_tmax_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_exp_tmax_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- Tmin -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_exp_tmin" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_exp_tmin_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_exp_tmin" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="10" android:valueTo="800" android:stepSize="5"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_exp_tmin_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_exp_tmin_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- Lambda -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_exp_lambda" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_exp_lambda_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_exp_lambda" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="0.01" android:valueTo="0.5" android:stepSize="0.005"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_exp_lambda_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_exp_lambda_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Damped Oscillator Panel -->
+            <LinearLayout android:id="@+id/panel_damp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:orientation="vertical" android:visibility="gone">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_damp_title" android:textColor="?attr/colorOnSurface" android:textSize="14sp" android:textStyle="bold"/>
+
+    <TextView android:id="@+id/btn_reset_damp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ui_restore_default" android:textColor="?attr/colorPrimary" android:textSize="12.5sp" android:paddingHorizontal="8dp" android:paddingVertical="4dp" android:background="?attr/selectableItemBackgroundBorderless" android:clickable="true" android:focusable="true"/>
+</LinearLayout>
+<!-- A -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_common_amplitude" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_damp_a_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_damp_a" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="0" android:valueTo="800" android:stepSize="5"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_damp_a_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_damp_a_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- Omega -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_common_frequency" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_damp_omega_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_damp_omega" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="0.1" android:valueTo="5.0" android:stepSize="0.1"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_damp_omega_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_damp_omega_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- Zeta -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_damp_zeta" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_damp_zeta_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_damp_zeta" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="0.0" android:valueTo="1.0" android:stepSize="0.01"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_damp_zeta_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_damp_zeta_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Square Wave Burst Panel -->
+            <LinearLayout android:id="@+id/panel_square" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:orientation="vertical" android:visibility="gone">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_square_title" android:textColor="?attr/colorOnSurface" android:textSize="14sp" android:textStyle="bold"/>
+
+    <TextView android:id="@+id/btn_reset_square" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ui_restore_default" android:textColor="?attr/colorPrimary" android:textSize="12.5sp" android:paddingHorizontal="8dp" android:paddingVertical="4dp" android:background="?attr/selectableItemBackgroundBorderless" android:clickable="true" android:focusable="true"/>
+</LinearLayout>
+<!-- A -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_common_amplitude" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_square_a_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_square_a" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="0" android:valueTo="800" android:stepSize="5"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_square_a_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_square_a_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- Omega -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_common_frequency" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                        <TextView android:id="@+id/tv_square_omega_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider android:id="@+id/slider_square_omega" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="0.1" android:valueTo="5.0" android:stepSize="0.1"/>
+
+                    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="-2dp">
+
+                    <TextView
+                        android:id="@+id/tv_tip_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/ui_nl_hint_square_omega_left" />
+
+                    <TextView
+                        android:id="@+id/tv_tip_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/ui_nl_hint_square_omega_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1A000000" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- Perlin Noise Flow Panel -->
+            <LinearLayout
+                android:id="@+id/panel_perlin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ui_streaming_nl_perlin_title"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btn_reset_perlin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ui_restore_default"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="12.5sp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="4dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+
+                <!-- Base Speed -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ui_streaming_nl_perlin_base_speed"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_perlin_base_speed_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_perlin_base_speed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="0.40"
+                        android:valueTo="3.00"
+                        android:stepSize="0.05" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:layout_marginTop="-2dp">
+
+                        <TextView
+                            android:id="@+id/tv_tip_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/ui_nl_hint_perlin_base_speed_left" />
+
+                        <TextView
+                            android:id="@+id/tv_tip_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/ui_nl_hint_perlin_base_speed_right" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- Octaves -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ui_streaming_nl_perlin_octaves"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_perlin_octaves_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_perlin_octaves"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="1"
+                        android:valueTo="8"
+                        android:stepSize="1" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:layout_marginTop="-2dp">
+
+                        <TextView
+                            android:id="@+id/tv_tip_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/ui_nl_hint_perlin_octaves_left" />
+
+                        <TextView
+                            android:id="@+id/tv_tip_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/ui_nl_hint_perlin_octaves_right" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- Frequency -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ui_streaming_nl_perlin_frequency"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_perlin_frequency_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_perlin_frequency"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="0.20"
+                        android:valueTo="4.00"
+                        android:stepSize="0.05" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:layout_marginTop="-2dp">
+
+                        <TextView
+                            android:id="@+id/tv_tip_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/ui_nl_hint_perlin_frequency_left" />
+
+                        <TextView
+                            android:id="@+id/tv_tip_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/ui_nl_hint_perlin_frequency_right" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#1A000000" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- PID Controller Panel -->
+            <LinearLayout
+                android:id="@+id/panel_pid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ui_streaming_nl_pid_title"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btn_reset_pid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ui_restore_default"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="12.5sp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="4dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+
+                <!-- Target Speed -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ui_streaming_nl_pid_target_speed"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_pid_target_speed_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_pid_target_speed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="0.40"
+                        android:valueTo="3.50"
+                        android:stepSize="0.05" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:layout_marginTop="-2dp">
+
+                        <TextView
+                            android:id="@+id/tv_tip_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/ui_nl_hint_pid_target_speed_left" />
+
+                        <TextView
+                            android:id="@+id/tv_tip_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/ui_nl_hint_pid_target_speed_right" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- P -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ui_streaming_nl_pid_p"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_pid_p_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_pid_p"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="0.02"
+                        android:valueTo="2.00"
+                        android:stepSize="0.01" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:layout_marginTop="-2dp">
+
+                        <TextView
+                            android:id="@+id/tv_tip_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/ui_nl_hint_pid_p_left" />
+
+                        <TextView
+                            android:id="@+id/tv_tip_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/ui_nl_hint_pid_p_right" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- D -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ui_streaming_nl_pid_d"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_pid_d_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_pid_d"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="0.00"
+                        android:valueTo="2.00"
+                        android:stepSize="0.01" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:layout_marginTop="-2dp">
+
+                        <TextView
+                            android:id="@+id/tv_tip_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/ui_nl_hint_pid_d_left" />
+
+                        <TextView
+                            android:id="@+id/tv_tip_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/ui_nl_hint_pid_d_right" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#1A000000" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Logistic Fatigue Panel -->
+            <LinearLayout
+                android:id="@+id/panel_logistic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ui_streaming_nl_logistic_title"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btn_reset_logistic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ui_restore_default"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="12.5sp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="4dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+
+                <!-- Initial Burst -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ui_streaming_nl_logistic_initial_burst"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_logistic_initial_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_logistic_initial"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="10"
+                        android:valueTo="260"
+                        android:stepSize="5" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:layout_marginTop="-2dp">
+
+                        <TextView
+                            android:id="@+id/tv_tip_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/ui_nl_hint_logistic_initial_left" />
+
+                        <TextView
+                            android:id="@+id/tv_tip_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/ui_nl_hint_logistic_initial_right" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- Decay Half-life -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ui_streaming_nl_logistic_decay"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_logistic_decay_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_logistic_decay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="6.0"
+                        android:valueTo="220.0"
+                        android:stepSize="1.0" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:layout_marginTop="-2dp">
+
+                        <TextView
+                            android:id="@+id/tv_tip_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/ui_nl_hint_logistic_decay_left" />
+
+                        <TextView
+                            android:id="@+id/tv_tip_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/ui_nl_hint_logistic_decay_right" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- Recovery -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ui_streaming_nl_logistic_recovery"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_logistic_recovery_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_logistic_recovery"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="0.0"
+                        android:valueTo="1.0"
+                        android:stepSize="0.01" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:layout_marginTop="-2dp">
+
+                        <TextView
+                            android:id="@+id/tv_tip_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/ui_nl_hint_logistic_recovery_left" />
+
+                        <TextView
+                            android:id="@+id/tv_tip_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/ui_nl_hint_logistic_recovery_right" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#1A000000" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Retro Typewriter Panel -->
+            <LinearLayout
+                android:id="@+id/panel_retro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ui_streaming_nl_retro_title"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btn_reset_retro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ui_restore_default"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="12.5sp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="4dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+
+                <!-- Key Speed -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ui_streaming_nl_retro_key_speed"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_retro_key_speed_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_retro_key_speed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="12"
+                        android:valueTo="240"
+                        android:stepSize="2" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:layout_marginTop="-2dp">
+
+                        <TextView
+                            android:id="@+id/tv_tip_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/ui_nl_hint_retro_key_speed_left" />
+
+                        <TextView
+                            android:id="@+id/tv_tip_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/ui_nl_hint_retro_key_speed_right" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- CR Delay -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ui_streaming_nl_retro_cr_delay"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_retro_cr_delay_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_retro_cr_delay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="0"
+                        android:valueTo="1600"
+                        android:stepSize="20" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:layout_marginTop="-2dp">
+
+                        <TextView
+                            android:id="@+id/tv_tip_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/ui_nl_hint_retro_cr_delay_left" />
+
+                        <TextView
+                            android:id="@+id/tv_tip_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/ui_nl_hint_retro_cr_delay_right" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#1A000000" />
+                </LinearLayout>
+
+                <!-- Punc Drag -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ui_streaming_nl_retro_punc_drag"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_retro_punc_drag_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_retro_punc_drag"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="0"
+                        android:valueTo="600"
+                        android:stepSize="10" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:layout_marginTop="-2dp">
+
+                        <TextView
+                            android:id="@+id/tv_tip_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/ui_nl_hint_retro_punc_drag_left" />
+
+                        <TextView
+                            android:id="@+id/tv_tip_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/ui_nl_hint_retro_punc_drag_right" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#1A000000" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+<!-- Render buffer / prefetch (NON-LINEAR real output only) -->
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:orientation="vertical">
+
+    <!-- Trigger (list-item style) -->
+    <LinearLayout android:id="@+id/item_nl_prefetch_trigger" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:paddingStart="0dp" android:paddingEnd="0dp" android:paddingTop="10dp" android:paddingBottom="10dp" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
+
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_prefetch_title" android:textColor="?attr/colorPrimary" android:textSize="14sp" android:textStyle="bold"/>
+
+        <TextView android:id="@+id/tv_nl_prefetch_selected" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+
+        <ImageView android:layout_width="18dp" android:layout_height="18dp" android:layout_marginStart="6dp" android:src="@drawable/ic_chevron_right" android:tint="?attr/colorOnSurfaceVariant"/>
+    </LinearLayout>
+
+<!-- Custom thresholds -->
+    <LinearLayout android:id="@+id/panel_nl_prefetch_custom" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="vertical" android:visibility="gone">
+
+        <!-- Custom header + reset -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="8dp" android:gravity="center_vertical" android:orientation="horizontal">
+
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_prefetch_custom_params" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+            <TextView android:id="@+id/btn_reset_pf_custom" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ui_restore_default" android:textColor="?attr/colorPrimary" android:textSize="12.5sp" android:paddingHorizontal="8dp" android:paddingVertical="4dp" android:background="?attr/selectableItemBackgroundBorderless" android:clickable="true" android:focusable="true"/>
+        </LinearLayout>
+
+
+                    <!-- Start chars -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_prefetch_start" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                            <TextView android:id="@+id/tv_pf_start_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                        </LinearLayout>
+
+                        <com.google.android.material.slider.Slider android:id="@+id/slider_pf_start" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="0" android:valueTo="600" android:stepSize="10"/>
+                    </LinearLayout>
+
+                    <!-- Low watermark -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_prefetch_low" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                            <TextView android:id="@+id/tv_pf_low_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                        </LinearLayout>
+
+                        <com.google.android.material.slider.Slider android:id="@+id/slider_pf_low" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="0" android:valueTo="600" android:stepSize="10"/>
+                    </LinearLayout>
+
+                    <!-- Top-up target -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" android:layout_marginBottom="8dp">
+
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+
+                            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_streaming_nl_prefetch_target" android:textColor="?attr/colorOnSurface" android:textSize="13sp" android:textStyle="bold"/>
+
+                            <TextView android:id="@+id/tv_pf_target_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorOnSurfaceVariant" android:textSize="13sp"/>
+                        </LinearLayout>
+
+                        <com.google.android.material.slider.Slider android:id="@+id/slider_pf_target" android:layout_width="match_parent" android:layout_height="wrap_content" android:valueFrom="0" android:valueTo="1200" android:stepSize="10"/>
+                    </LinearLayout>
+
+                    </LinearLayout>
+</LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

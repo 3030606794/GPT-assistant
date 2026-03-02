@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Selected: icon grows a bit more than the pill, with a soft bounce -->
+    <item android:state_selected="true">
+        <set>
+            <objectAnimator
+                android:propertyName="scaleX"
+                android:valueTo="1.2"
+                android:duration="260"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/overshoot" />
+            <objectAnimator
+                android:propertyName="scaleY"
+                android:valueTo="1.2"
+                android:duration="260"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/overshoot" />
+        </set>
+    </item>
+
+    <!-- Default: back to normal -->
+    <item>
+        <set>
+            <objectAnimator
+                android:propertyName="scaleX"
+                android:valueTo="1.0"
+                android:duration="180"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/decelerate_quad" />
+            <objectAnimator
+                android:propertyName="scaleY"
+                android:valueTo="1.0"
+                android:duration="180"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/decelerate_quad" />
+        </set>
+    </item>
+
+</selector>

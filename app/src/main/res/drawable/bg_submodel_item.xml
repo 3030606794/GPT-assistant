@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- applied + pending (same item) -->
+    <item android:state_selected="true" android:state_activated="true">
+        <shape android:shape="rectangle">
+            <solid android:color="?attr/colorSecondaryContainer" />
+            <stroke android:width="1dp" android:color="?attr/colorPrimary" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+    <!-- pending selection in dialog (not applied yet) -->
+    <item android:state_activated="true">
+        <shape android:shape="rectangle">
+            <solid android:color="?attr/colorSecondaryContainer" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+    <!-- applied model marker when browsing other items -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#12000000" />
+            <stroke android:width="1dp" android:color="?attr/colorOutline" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="?attr/colorSurfaceVariant" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+</selector>

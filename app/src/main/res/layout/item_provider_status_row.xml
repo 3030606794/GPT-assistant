@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_list_item_ripple"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12dp">
+
+    <ImageView
+        android:id="@+id/iv_provider_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_provider_default"
+        app:tint="@null" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_provider_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_provider_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_refresh"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="10dp"
+        android:background="@null"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="3dp"
+        android:contentDescription="@string/fetch_models"
+        android:src="@drawable/ic_refresh_liquid"
+        app:tint="@null" />
+
+    <ImageView
+        android:id="@+id/iv_edit"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="10dp"
+        android:background="@null"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="3dp"
+        android:contentDescription="@string/configure_model_title"
+        android:src="@drawable/ic_edit"
+        app:tint="@null" />
+
+        
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="10dp"
+        android:background="@null"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="3dp"
+        android:contentDescription="@string/ui_delete"
+        android:src="@drawable/ic_trash_filled"
+        app:tint="?attr/colorError" />
+
+    <ImageView
+        android:id="@+id/iv_key"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="0dp"
+        android:contentDescription="@string/nav_api_keys"
+        android:src="@drawable/ic_key_filled"
+        android:visibility="gone"
+        app:tint="@null" />
+
+</LinearLayout>

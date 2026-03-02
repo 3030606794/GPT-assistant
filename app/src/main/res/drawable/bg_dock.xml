@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  v6: Make the dock background slightly less "pure white" and more frosted-like,
+  so the selected "liquid glass" pill reads clearer and feels less abrupt.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base frosted background (subtle gradient) -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="@color/dock_bg_top"
+                android:endColor="@color/dock_bg_bottom" />
+            <corners android:radius="28dp" />
+        </shape>
+    </item>
+
+    <!-- Inner top highlight (very subtle) -->
+    <item android:bottom="34dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="@color/dock_inner_highlight"
+                android:endColor="#00FFFFFF" />
+            <corners android:radius="28dp" />
+        </shape>
+    </item>
+
+    <!-- Hairline border (helps define the dock on white backgrounds) -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#00000000" />
+            <stroke
+                android:width="1dp"
+                android:color="@color/dock_border" />
+            <corners android:radius="28dp" />
+        </shape>
+    </item>
+
+</layer-list>

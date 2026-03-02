@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/kgpt_top_banner_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="14dp"
+    android:paddingEnd="14dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="@drawable/bg_top_status_banner"
+    android:elevation="12dp">
+
+    <ImageView
+        android:id="@+id/kgpt_top_banner_icon"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/kgpt_top_banner_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="AI 正在回复" />
+
+    <!-- Token Burner: shown only during streaming (visibility controlled in code). -->
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/kgpt_top_banner_token_burner"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="10dp"
+        android:visibility="gone"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="0"
+        app:indicatorSize="16dp"
+        app:trackThickness="2dp" />
+
+</LinearLayout>

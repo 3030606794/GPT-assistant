@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_ai_chat_send_image"
+        android:title="@string/ui_ai_chat_send_image" />
+
+    <item
+        android:id="@+id/action_ai_chat_send_file"
+        android:title="@string/ui_ai_chat_send_file" />
+
+    <item
+        android:id="@+id/action_ai_chat_new_chat"
+        android:title="@string/ui_ai_chat_new_chat" />
+
+    <item
+        android:id="@+id/action_ai_chat_switch_chat"
+        android:title="@string/ui_ai_chat_switch_chat" />
+
+</menu>

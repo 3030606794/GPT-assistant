@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="4dp"
+    android:paddingBottom="2dp"
+    android:paddingHorizontal="6dp">
+
+    <TextView
+        android:id="@+id/tv_memory_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="当前记忆轮数：1 轮  ·  [🧊 极简快答 (轻量低耗)]"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:id="@+id/fl_memory_blocks_container"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginTop="8dp">
+
+        <LinearLayout
+            android:id="@+id/ll_memory_blocks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:baselineAligned="false" />
+
+        <View
+            android:id="@+id/v_sweep_light"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|center_vertical"
+            android:background="@drawable/bg_memory_sweep_light"
+            android:clickable="false"
+            android:focusable="false"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+    <SeekBar
+        android:id="@+id/seek_memory_rounds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:max="20" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="2dp"
+        android:paddingHorizontal="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0 轮（无上下文）"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_memory_right_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20 轮"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_token_estimation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="[📊 算力估值] 携带上下文将消耗 ~800 Tokens/次。"
+        android:textColor="?android:attr/textColorSecondary"
+        android:fontFamily="monospace"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="start|center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_memory_default_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="默认值：1 轮"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_current_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前设定：1 轮"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_memory_animation_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="start|center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_memory_animation_mode"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:minHeight="0dp"
+            android:paddingHorizontal="8dp"
+            android:text="动画选择"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_memory_animation_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="10dp"
+            android:text="关闭动画"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_memory_animation_speed_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="动画速度（周期倍率）"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_memory_anim_speed_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="100%（倍率）"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/seek_memory_anim_speed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="70" />
+
+    <TextView
+        android:id="@+id/tv_attention_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#10F44336"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="6dp"
+        android:text="⚠️ 警告：上下文过长可能导致模型注意力稀释（幻觉率上升）。"
+        android:textColor="#F44336"
+        android:textSize="11sp"
+        android:visibility="gone" />
+
+</LinearLayout>

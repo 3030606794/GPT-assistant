@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorBackground"
+    android:fitsSystemWindows="true">
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false" />
+
+    <!-- Winter Mode: Snowfall Overlay -->
+    <tn.eluea.kgpt.ui.view.SnowfallView
+        android:id="@+id/snowfall_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="100dp"
+        android:visibility="gone"
+        android:clickable="false"
+        android:focusable="false" />
+
+    <!-- Floating Dock Navigation -->
+    <LinearLayout
+        android:id="@+id/floating_dock"
+        android:layout_width="wrap_content"
+        android:layout_height="76dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/bg_dock"
+        android:elevation="0dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <!-- Navigation Items Container -->
+        <FrameLayout
+            android:id="@+id/nav_items_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:foregroundGravity="center"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+
+            <!-- Moving "Liquid Glass" Selection Indicator -->
+            <View
+                android:id="@+id/dock_selection_indicator"
+                android:layout_width="64dp"
+                android:layout_height="58dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/bg_dock_item_glass_selected"
+                android:alpha="0"
+                android:translationX="0dp" />
+
+            <!-- Navigation Items -->
+            <LinearLayout
+                android:id="@+id/nav_items_linear"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+            <!-- Home -->
+            <FrameLayout
+                android:id="@+id/nav_home"
+                android:layout_width="64dp"
+                android:layout_height="58dp"
+                android:layout_marginHorizontal="4dp"
+                android:background="@drawable/bg_dock_item"
+                android:stateListAnimator="@animator/dock_item_state_animator"
+                android:clickable="true"
+                android:focusable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp">
+
+                    <ImageView
+                        android:id="@+id/nav_home_icon"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:duplicateParentState="true"
+                        android:stateListAnimator="@animator/dock_icon_state_animator"
+                        android:src="@drawable/ic_dock_home" />
+
+                    <TextView
+                        android:id="@+id/nav_home_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:duplicateParentState="true"
+                        android:includeFontPadding="false"
+                        android:text="@string/dock_home"
+                        android:textColor="@color/selector_dock_label"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Lab -->
+            <FrameLayout
+                android:id="@+id/nav_lab"
+                android:layout_width="64dp"
+                android:layout_height="58dp"
+                android:layout_marginHorizontal="4dp"
+                android:background="@drawable/bg_dock_item"
+                android:stateListAnimator="@animator/dock_item_state_animator"
+                android:clickable="true"
+                android:focusable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp">
+
+                    <ImageView
+                        android:id="@+id/nav_lab_icon"
+                        android:layout_width="29dp"
+                        android:layout_height="29dp"
+                        android:duplicateParentState="true"
+                        android:stateListAnimator="@animator/dock_icon_state_animator"
+                        android:src="@drawable/ic_dock_ai_settings" />
+
+                    <TextView
+                        android:id="@+id/nav_lab_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:duplicateParentState="true"
+                        android:includeFontPadding="false"
+                        android:text="@string/dock_ai_settings"
+                        android:textColor="@color/selector_dock_label"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Console -->
+            <FrameLayout
+                android:id="@+id/nav_console"
+                android:layout_width="64dp"
+                android:layout_height="58dp"
+                android:layout_marginHorizontal="4dp"
+                android:background="@drawable/bg_dock_item"
+                android:stateListAnimator="@animator/dock_item_state_animator"
+                android:clickable="true"
+                android:focusable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp">
+
+                    <ImageView
+                        android:id="@+id/nav_console_icon"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:duplicateParentState="true"
+                        android:stateListAnimator="@animator/dock_icon_state_animator"
+                        android:src="@drawable/ic_dock_console" />
+
+                    <TextView
+                        android:id="@+id/nav_console_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:duplicateParentState="true"
+                        android:includeFontPadding="false"
+                        android:text="@string/dock_console"
+                        android:textColor="@color/selector_dock_label"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Settings -->
+            <FrameLayout
+                android:id="@+id/nav_settings"
+                android:layout_width="64dp"
+                android:layout_height="58dp"
+                android:layout_marginHorizontal="4dp"
+                android:background="@drawable/bg_dock_item"
+                android:stateListAnimator="@animator/dock_item_state_animator"
+                android:clickable="true"
+                android:focusable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp">
+
+                    <ImageView
+                        android:id="@+id/nav_settings_icon"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:duplicateParentState="true"
+                        android:stateListAnimator="@animator/dock_icon_state_animator"
+                        android:src="@drawable/ic_dock_settings" />
+
+                    <TextView
+                        android:id="@+id/nav_settings_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:duplicateParentState="true"
+                        android:includeFontPadding="false"
+                        android:text="@string/dock_settings"
+                        android:textColor="@color/selector_dock_label"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </FrameLayout>
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <!-- Dock Action Container (Hidden by default) -->
+        <LinearLayout
+            android:id="@+id/dock_action_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:visibility="gone"
+            android:paddingHorizontal="12dp">
+
+            <ImageView
+                android:id="@+id/dock_action_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_add"
+                app:tint="?attr/colorOnPrimaryContainer" />
+
+            <TextView
+                android:id="@+id/dock_action_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@string/ui_action"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
